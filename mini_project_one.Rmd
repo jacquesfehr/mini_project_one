@@ -28,12 +28,98 @@ ggplot(data = bad_drivers, aes(x= reorder(state, num_drivers), y = perc_not_dist
 ```{r}
 ggplot(data = bad_drivers, aes(x= perc_alcohol, y = num_drivers)) + geom_point() + coord_flip()
 ```
+```{r}
+library(ggplot2)
+library(fivethirtyeight)
+```
+
 
 ```{r}
-ggplot(data = pres_2016_trail, aes(x = lng, y = lat)) +labs(x = "Longitude", y = "Latitude", title = "Trump 2016 Campaign Trail") + geom_path(aes(color = candidate), show.legend = FALSE) 
+campaign_trails <- ggplot(data = pres_2016_trail, 
+       aes(x = lng, 
+           y = lat)) + 
+  labs(x = "Longitude",
+       y = "Latitude", 
+       title = "2016 Campaign Trails") +
+  geom_path(aes(color = candidate), 
+            show.legend = TRUE)
 ```
 
 ```{r}
-
+ggplot(data = pres_2016_trail, aes(x = lng, y = lat)) + labs(x = "Longitude", y = "Latitude", title = "Trump 2016 Campaign Trail") + geom_path(aes(color = "Red"))
 ```
 
+```{r}
+library(png)
+library(grid)
+library(ggplot2)
+```
+
+```{r}
+ggplot() + annotation_custom(g)
+```
+
+
+```{r}
+img <- readPNG(system.file("img", "swag11.png", package="png"))
+g <- rasterGrob(img, interpolate=TRUE)
+```
+
+```{r}
+campaign_trails +
+  annotation_custom(g, 
+                    xmin=-128, 
+                    xmax=-62, 
+                    ymin=15, 
+                    ymax=55) +
+  geom_point(aes(color = candidate)) +
+  geom_path(aes(color = candidate)) +
+  scale_color_manual(values = c("blue", "red"))
+```
+
+in datacamp go to spatial plot - instrucotrs name is charlotte wicham, do the first chapter
+
+installing ggmap
+```{r}
+library(ggplot2)
+library(ggmap)
+library(fivethirtyeight)
+```
+
+```{r}
+qmplot(lng, lat, data = pres_2016_trail, zoom = 6, geom = "point", geom = "path", color = candidate)
+```
+
+```{r}
+qmplot(lng,
+       lat,
+       data = pres_2016_trail,
+       source = "stamen",
+       maptype = "toner-lite",
+       zoom = 5,
+       mapcolor = "color",
+       geom = "path",
+       color = candidate) +
+  geom_point() +
+  scale_color_manual(values = c("blue", "red")) +
+  facet_wrap("candidate", ncol = 1) +
+  labs(title = "2016 Campaign Trails")
+  
+```
+```{r}
+qmplot(lng,
+       lat,
+       data = pres_2016_trail,
+       source = "stamen",
+       maptype = "toner-lite",
+       zoom = 5,
+       mapcolor = "color",
+       geom = "path",
+       color = candidate) +
+  geom_point() +
+  scale_color_manual(values = c("blue", "red")) +
+  labs(title = "2016 Campaign Trails")
+```
+
+https://lh5.googleusercontent.com/XOhwW48KRAkxHx8zvh6XjE2LfcqXveTY1nfNTOhSJVSHwHruQBe2PeVDh5L4W03Ci74dt5SS7OwOK0bWnFOgzBOMMSAmvxmwuGaI-vQMxes3_fnR_hsVTuIrxKAp9RWXm5biDX4j 
+link to datamap of election data
